@@ -44,7 +44,13 @@ namespace CLI
 
                     var connectionName = args[2];
                     var parameter = args[3];
-                    var connection = connectionService.Connections.FirstOrDefault(c => c.ConnectionName == connectionName);
+                    var connection = connectionService.Connections.FirstOrDefault(c => c.ConnectionName.Equals(connectionName, StringComparison.InvariantCultureIgnoreCase));
+                    if (connection == null)
+                    {
+                        Console.WriteLine($"No connection with name '{connectionName}' available.");
+                        return;
+                    }
+
                     connection.Parameter = parameter;
                     await connectionService.UpdateConectionParameter(connection);
                     break;
