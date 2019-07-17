@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLI", "CLI\CLI.csproj", "{5874E5DF-E69E-481D-B69F-F47C157A081C}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CLI", "CLI\CLI.csproj", "{5874E5DF-E69E-481D-B69F-F47C157A081C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinCCConnectionTool.Gui", "WinCCConnectionTool.Gui\WinCCConnectionTool.Gui.csproj", "{08604DCA-D1A2-4E9D-8E26-102AA67A8813}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,15 @@ Global
 		{5874E5DF-E69E-481D-B69F-F47C157A081C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5874E5DF-E69E-481D-B69F-F47C157A081C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5874E5DF-E69E-481D-B69F-F47C157A081C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08604DCA-D1A2-4E9D-8E26-102AA67A8813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08604DCA-D1A2-4E9D-8E26-102AA67A8813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08604DCA-D1A2-4E9D-8E26-102AA67A8813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08604DCA-D1A2-4E9D-8E26-102AA67A8813}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35400167-2573-4EEB-AFDE-F0A9723A2604}
 	EndGlobalSection
 EndGlobal
