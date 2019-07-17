@@ -15,13 +15,14 @@ namespace CLI
             if (args.Length < 1)
             {
                 ShowUsage();
+                return;
             }
 
             var path = args[0];
             var cmd = args[1];
 
             IConnectionService connectionService = new ConnectionService();
-            await connectionService.LoadDatabase(@"(localdb)\MSSQLLocalDB", path);
+            await connectionService.LoadDatabase(@".\WINCC", path);
 
             switch (cmd)
             {
@@ -39,7 +40,7 @@ namespace CLI
                         ShowUsage();
                         return;
                     }
-                }
+                
 
                     var connectionName = args[2];
                     var parameter = args[3];
@@ -47,6 +48,7 @@ namespace CLI
                     connection.Parameter = parameter;
                     await connectionService.UpdateConectionParameter(connection);
                     break;
+                }
             }
 
             connectionService.CloseDatabase();
