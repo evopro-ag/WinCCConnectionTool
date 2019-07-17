@@ -14,7 +14,7 @@ namespace CLI.Logic
         {
             var optionsBuilder = new DbContextOptionsBuilder<Context>();
 
-            optionsBuilder.UseSqlServer($@"Data Source={dbInstance};Integrated Security=SSPI;AttachDbFilename={dbPath};app=LINQPad;TrustServerCertificate=true");
+            optionsBuilder.UseSqlServer($@"Data Source={dbInstance};Integrated Security=SSPI;AttachDbFilename={dbPath};TrustServerCertificate=true");
 
 
             context = new Context(optionsBuilder.Options);
