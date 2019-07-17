@@ -41,23 +41,28 @@ namespace CLI
                         return;
                     }
                 
-
                     var connectionName = args[2];
                     var parameter = args[3];
-                    var connection = connectionService.Connections.FirstOrDefault(c => c.ConnectionName.Equals(connectionName, StringComparison.InvariantCultureIgnoreCase));
-                    if (connection == null)
-                    {
-                        Console.WriteLine($"No connection with name '{connectionName}' available.");
-                        return;
-                    }
-
-                    connection.Parameter = parameter;
-                    await connectionService.UpdateConectionParameter(connection);
+                    await SetConnectionParameter(connectionService, connectionName, parameter);
                     break;
                 }
             }
 
             connectionService.CloseDatabase();
+        }
+
+        private static async Task SetConnectionParameter(IConnectionService connectionService, string connectionName, string parameter)
+        {
+            var connection = connectionService.Connections.FirstOrDefault(c => c.ConnectionName.Equals(connectionName, StringComparison.InvariantCultureIgnoreCase));
+            if (connection == null)
+            {
+                Console.WriteLine($"No connection with name '{connectionName}' available.");
+                return;
+            }
+
+            connection.Parameter = parameter;
+            await connectionService.UpdateConectionParameter(connection);
+            return;
         }
 
         private static void ShowUsage()
