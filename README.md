@@ -11,7 +11,7 @@ Full qualified path to *.mdf database file `.\HMI_577I\HMI_577I.MDF`
 
 ### cmd: 
 * `list`: Lists all connections within the WinCC project
-* `set`: Set the parameter to a given connection name.
+* `set <connectionName> <newParameter>`: Set the parameter to a given connection name.
 
  Example:
  * S7 Connection: `cli.exe "C:\temp\project1\HMI_577I\HMI_577I.MDF" set "connection1" "IP,10.10.100.119,,0,2,02"` 
