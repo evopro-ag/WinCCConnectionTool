@@ -10,5 +10,9 @@
     <PackageReference Include="ReactiveUI.WPF" Version="9.19.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CLI\CLI.csproj" />
+  </ItemGroup>
+
 
 </Project>
