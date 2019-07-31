@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CLI.Inerfaces;
 using CLI.Logic;
 using CLI.Model;
+using ConsoleTables;
 using Microsoft.EntityFrameworkCore;
 
 namespace CLI
@@ -28,8 +29,10 @@ namespace CLI
             {
                 case "list":
                 {
-                    var connectionNames = string.Join(Environment.NewLine, connectionService.Connections);
-                    Console.WriteLine(connectionNames);
+                    ConsoleTable
+                        .From(connectionService.Connections)
+                        .Write(Format.Alternative);
+
                     break;
                 }
 
