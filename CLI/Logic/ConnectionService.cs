@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CLI.Logic
 {
-    internal class ConnectionService : IConnectionService
+    public class ConnectionService : IConnectionService
     {
         private Context context;
 

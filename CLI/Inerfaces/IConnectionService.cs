@@ -4,7 +4,7 @@ using CLI.Model;
 
 namespace CLI.Inerfaces
 {
-    internal interface IConnectionService
+    public interface IConnectionService
     {
         Task LoadDatabase(string dbInstance, string dbPath);
         IEnumerable<Connection> Connections { get; }
