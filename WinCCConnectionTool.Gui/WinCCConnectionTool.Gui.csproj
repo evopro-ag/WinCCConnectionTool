@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="ReactiveUI.WPF" Version="9.19.5" />
+    <PackageReference Include="Costura.Fody" Version="3.3.2" />
   </ItemGroup>
 
   <ItemGroup>
