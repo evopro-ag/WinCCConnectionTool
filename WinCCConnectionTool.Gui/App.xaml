@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:WinCCConnectionTool.Gui"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+         <local:MainViewModel x:Key="MainViewModel"></local:MainViewModel>
     </Application.Resources>
 </Application>
