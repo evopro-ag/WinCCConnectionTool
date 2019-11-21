@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CLI
 {
-    [Subcommand(typeof(ListCommand), typeof(SetCommand))]
+    [Subcommand(typeof(ListCommand), typeof(SetCommand), typeof(UpdateConnection))]
     public class Program
     {
         private static CommandLineApplication<Program> app;
