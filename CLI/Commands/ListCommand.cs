@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,18 +15,13 @@ namespace CLI.Commands
     [Command("list", Description = "list DB connections")]
     class ListCommand : CommandBase
     {
-        [Argument(0)]
-        [Required]
-        public string Path { get; set; }
-
         public async Task OnExecute()
         {
+            SearchMdfFile();
             await LoadDatabase(Path);
-            IConnectionService connectionService = new ConnectionService();
-            await connectionService.LoadDatabase(@".\WINCC", Path);
 
             ConsoleTable
-                .From(connectionService.Connections)
+                .From(ConnectionService.Connections)
                 .Write(Format.Alternative);
             Close();
         }

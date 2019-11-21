@@ -15,20 +15,32 @@ namespace CLI
     [Subcommand(typeof(ListCommand), typeof(SetCommand), typeof(UpdateConnection))]
     public class Program
     {
+        [Option("--path", Description = "Path to MDF file")]
+        public string Path { get; set; }
+
+
         private static CommandLineApplication<Program> app;
 
         public static int Main(string[] args)
         {
-            var services = new ServiceCollection()
-                .AddSingleton<IConnectionService>(new ConnectionService())
-                .BuildServiceProvider();
-
-            using (app = new CommandLineApplication<Program>())
+            try
             {
-                app.Conventions
-                    .UseDefaultConventions()
-                    .UseConstructorInjection(services);
-                return app.Execute(args);
+                var services = new ServiceCollection()
+                    .AddSingleton<IConnectionService>(new ConnectionService())
+                    .BuildServiceProvider();
+
+                using (app = new CommandLineApplication<Program>())
+                {
+                    app.Conventions
+                        .UseDefaultConventions()
+                        .UseConstructorInjection(services);
+                    return app.Execute(args);
+                }
+            }catch(InvalidCommandException ex)
+            {
+                Console.WriteLine(ex.Message);
+                app.ShowHelp();
+                return -1;
             }
         }
 

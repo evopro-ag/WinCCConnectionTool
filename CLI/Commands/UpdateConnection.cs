@@ -15,22 +15,19 @@ namespace CLI.Commands
     {
         [Argument(0)]
         [Required]
-        public string Path { get; set; }
+        public string ConnectionName { get; set; }
 
         [Argument(1)]
         [Required]
-        public string ConnectionName { get; set; }
-
-        [Argument(2)]
-        [Required]
         public string Host { get; set; }
 
-        [Argument(3)]
+        [Argument(2)]
         [Required]
         public string Port { get; set; }
 
         public async Task OnExecute()
         {
+            SearchMdfFile();
             await LoadDatabase(Path);
             await UpdateConnectionString();
             Close();

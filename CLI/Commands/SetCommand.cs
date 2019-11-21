@@ -12,20 +12,20 @@ namespace CLI.Commands
     [Command("set", Description = "set DB parameters")]
     class SetCommand : CommandBase
     {
-        [Argument(0)]
-        [Required]
+        [Option("--path", Description = "Path to MDF file")]
         public string Path { get; set; }
 
-        [Argument(1)]
+        [Argument(0)]
         [Required]
         public string ConnectionName { get; set; }
 
-        [Argument(2)]
+        [Argument(1)]
         [Required]
         public string Parameter { get; set; }
 
         public async Task OnExecute()
         {
+            SearchMdfFile();
             await LoadDatabase(Path);
             await SetConnectionParameter();
             Close();
