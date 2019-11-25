@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CLI
 {
-    [Subcommand(typeof(ListCommand), typeof(SetCommand), typeof(UpdateConnection))]
+    [Subcommand(typeof(ListCommand), typeof(SetCommand), typeof(UpdateConnection), typeof(UpdateBlocknameCommand))]
     public class Program
     {
         [Option("--path", Description = "Path to MDF file")]
@@ -25,8 +25,11 @@ namespace CLI
         {
             try
             {
+                var databaseService = new DatabaseService();
                 var services = new ServiceCollection()
-                    .AddSingleton<IConnectionService>(new ConnectionService())
+                    .AddSingleton<IDatabaseService>(databaseService)
+                    .AddSingleton<IConnectionService>(new ConnectionService(databaseService))
+                    .AddSingleton<IVariableService>(new VariableService(databaseService))
                     .BuildServiceProvider();
 
                 using (app = new CommandLineApplication<Program>())
@@ -36,9 +39,13 @@ namespace CLI
                         .UseConstructorInjection(services);
                     return app.Execute(args);
                 }
-            }catch(InvalidCommandException ex)
+            }catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                if(ex.InnerException != null)
+                {
+                    Console.WriteLine(ex.InnerException.Message);
+                }
                 app.ShowHelp();
                 return -1;
             }

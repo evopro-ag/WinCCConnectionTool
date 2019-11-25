@@ -33,7 +33,7 @@ namespace CLI.Commands
 
         private async Task SetConnectionParameter()
         {
-            var connection = ConnectionService.Connections.FirstOrDefault(c => c.ConnectionName.Equals(ConnectionName, StringComparison.InvariantCultureIgnoreCase));
+            var connection = connectionService.Connections.FirstOrDefault(c => c.ConnectionName.Equals(ConnectionName, StringComparison.InvariantCultureIgnoreCase));
             if (connection == null)
             {
                 Console.WriteLine($"No connection with name '{ConnectionName}' available.");
@@ -41,11 +41,11 @@ namespace CLI.Commands
             }
 
             connection.Parameter = Parameter;
-            await ConnectionService.UpdateConectionParameter(connection);
+            await connectionService.UpdateConectionParameter(connection);
             return;
         }
 
-        public SetCommand(IConnectionService connectionService) : base(connectionService)
+        public SetCommand(IConnectionService connectionService, IDatabaseService databaseService) : base(connectionService, databaseService)
         {
         }
     }

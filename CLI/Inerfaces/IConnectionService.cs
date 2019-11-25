@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CLI.Model;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CLI.Inerfaces
 {
     public interface IConnectionService
     {
-        Task LoadDatabase(string dbInstance, string dbPath);
+        Task LoadConnections();
         IEnumerable<Connection> Connections { get; }
-        void CloseDatabase();
         Task UpdateConectionParameter(Connection connection);
     }
 }

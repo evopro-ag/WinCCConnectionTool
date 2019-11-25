@@ -19,14 +19,15 @@ namespace CLI.Commands
         {
             SearchMdfFile();
             await LoadDatabase(Path);
-
+            
             ConsoleTable
-                .From(ConnectionService.Connections)
+                .From(connectionService.Connections)
                 .Write(Format.Alternative);
             Close();
+            
         }
 
-        public ListCommand(IConnectionService connectionService) : base(connectionService)
+        public ListCommand(IConnectionService connectionService, IDatabaseService databaseService) : base(connectionService, databaseService)
         {
         }
     }

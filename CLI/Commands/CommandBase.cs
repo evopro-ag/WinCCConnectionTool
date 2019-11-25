@@ -12,26 +12,29 @@ namespace CLI.Commands
 {
     public class CommandBase
     {
+        protected readonly IDatabaseService databaseService;
 
         [Option("--path", Description = "Path to MDF file")]
         public string Path { get; set; }
 
 
-        protected IConnectionService ConnectionService { get; set; }
+        protected readonly IConnectionService connectionService;
 
-        public CommandBase(IConnectionService connectionService)
+        public CommandBase(IConnectionService connectionService, IDatabaseService databaseService)
         {
-            this.ConnectionService = connectionService;
+            this.databaseService = databaseService;
+            this.connectionService = connectionService;
         }
 
         protected async Task LoadDatabase(string path)
         {
-            await ConnectionService.LoadDatabase(@".\WINCC", path);
+            await databaseService.LoadDatabase(@".\WINCC", path);
+            await connectionService.LoadConnections();
         }
 
         protected void Close()
         {
-            ConnectionService.CloseDatabase();
+            databaseService.CloseDatabase();
         }
 
         protected void SearchMdfFile()
@@ -51,14 +54,6 @@ namespace CLI.Commands
                     throw new InvalidCommandException("Could not find MDF file. Please specify which one to use via the --path option");
                 }
             }
-        }
-    }
-
-    public class InvalidCommandException : Exception
-    {
-        public InvalidCommandException(string message) :base(message)
-        {
-
         }
     }
 }

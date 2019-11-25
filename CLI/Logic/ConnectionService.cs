@@ -1,37 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CLI.Inerfaces;
 using CLI.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CLI.Logic
 {
     public class ConnectionService : IConnectionService
     {
-        private Context context;
+        private readonly IDatabaseService databaseService;
 
-        public async Task LoadDatabase(string dbInstance, string dbPath)
+        public ConnectionService(IDatabaseService databaseService)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<Context>();
-
-            optionsBuilder.UseSqlServer($@"Data Source={dbInstance};Integrated Security=SSPI;AttachDbFilename={dbPath};TrustServerCertificate=true");
-
-
-            context = new Context(optionsBuilder.Options);
-
-            Connections = await context.Connection.ToArrayAsync();
-
+            this.databaseService = databaseService;
         }
-
-        public void CloseDatabase()
+        public async Task LoadConnections()
         {
-            context.Dispose();
+            Connections = await databaseService.CurrentContext.Connection.ToArrayAsync();
         }
 
         public async Task UpdateConectionParameter(Connection connection)
         {
-            context.Update(connection);
-            await context.SaveChangesAsync();
+            databaseService.CurrentContext.Update(connection);
+            await databaseService.CurrentContext.SaveChangesAsync();
         }
 
         public IEnumerable<Connection> Connections { get; private set;  }

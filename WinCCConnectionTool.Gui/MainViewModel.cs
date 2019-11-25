@@ -14,10 +14,14 @@ namespace WinCCConnectionTool.Gui
 {
     public class MainViewModel: ViewModelBase
     {
+        public IConnectionService ConnectionService { get; }
+        public IDatabaseService DatabaseService { get; }
         private string projectPath;
 
-        public MainViewModel()
+        public MainViewModel(IConnectionService connectionService, IDatabaseService databaseService)
         {
+            ConnectionService = connectionService;
+            DatabaseService = databaseService;
             Initialize();
         }
 
@@ -39,9 +43,9 @@ namespace WinCCConnectionTool.Gui
 
         private async Task<IEnumerable<Connection>> LoadDatabase(string path)
         {
-            var connectionService = new ConnectionService();
-            await connectionService.LoadDatabase(@".\WINCC", path);
-            return connectionService.Connections;
+            await DatabaseService.LoadDatabase(@".\WINCC", path);
+            await ConnectionService.LoadConnections();
+            return ConnectionService.Connections;
         }
 
         public string ProjectPath
