@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reactive;
+﻿using System.Reactive;
 using System.Threading.Tasks;
 using CLI.Inerfaces;
 using CLI.Model;

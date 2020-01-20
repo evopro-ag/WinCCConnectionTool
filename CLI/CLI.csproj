@@ -15,12 +15,7 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="System.Reactive">
-        <HintPath>..\..\..\.nuget\packages\system.reactive\4.1.5\lib\net46\System.Reactive.dll</HintPath>
-      </Reference>
+      <PackageReference Include="System.Reactive" Version="4.3.2" />
     </ItemGroup>
 
 </Project>

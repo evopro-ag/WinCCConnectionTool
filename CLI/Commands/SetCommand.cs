@@ -12,9 +12,6 @@ namespace CLI.Commands
     [Command("set", Description = "set DB parameters")]
     class SetCommand : CommandBase
     {
-        [Option("--path", Description = "Path to MDF file")]
-        public string Path { get; set; }
-
         [Argument(0)]
         [Required]
         public string ConnectionName { get; set; }
