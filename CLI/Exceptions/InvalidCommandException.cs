@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Linq;
 
-namespace CLI.Commands
+namespace CLI.Exceptions
 {
     public class InvalidCommandException : Exception
     {

@@ -12,18 +12,18 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace CLI.Commands
 {
-    [Command("list", Description = "list DB connections")]
+    [Command("list", Description = "List all WinCC connections")]
     class ListCommand : CommandBase
     {
         public async Task OnExecute()
         {
-            SearchMdfFile();
-            await LoadDatabase(Path);
+            await LoadDatabase();
             
             ConsoleTable
-                .From(connectionService.Connections)
+                .From(ConnectionService.Connections)
                 .Write(Format.Alternative);
-            Close();
+            
+            CloseDatabase();
             
         }
 

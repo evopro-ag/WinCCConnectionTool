@@ -9,8 +9,8 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace CLI.Commands
 {
-    [Command("set", Description = "set DB parameters")]
-    class SetCommand : CommandBase
+    [Command("setCon", Description = "Set WinCC connection string")]
+    class SetConnectionCommand : CommandBase
     {
         [Argument(0)]
         [Required]
@@ -22,15 +22,14 @@ namespace CLI.Commands
 
         public async Task OnExecute()
         {
-            SearchMdfFile();
-            await LoadDatabase(Path);
+            await LoadDatabase();
             await SetConnectionParameter();
-            Close();
+            CloseDatabase();
         }
 
         private async Task SetConnectionParameter()
         {
-            var connection = connectionService.Connections.FirstOrDefault(c => c.ConnectionName.Equals(ConnectionName, StringComparison.InvariantCultureIgnoreCase));
+            var connection = ConnectionService.Connections.FirstOrDefault(c => c.ConnectionName.Equals(ConnectionName, StringComparison.InvariantCultureIgnoreCase));
             if (connection == null)
             {
                 Console.WriteLine($"No connection with name '{ConnectionName}' available.");
@@ -38,11 +37,11 @@ namespace CLI.Commands
             }
 
             connection.Parameter = Parameter;
-            await connectionService.UpdateConectionParameter(connection);
+            await ConnectionService.UpdateConectionParameter(connection);
             return;
         }
 
-        public SetCommand(IConnectionService connectionService, IDatabaseService databaseService) : base(connectionService, databaseService)
+        public SetConnectionCommand(IConnectionService connectionService, IDatabaseService databaseService) : base(connectionService, databaseService)
         {
         }
     }

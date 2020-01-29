@@ -4,6 +4,7 @@
 		<LangVersion>7.3</LangVersion>
         <OutputType>Exe</OutputType>
         <TargetFramework>net462</TargetFramework>
+        <AssemblyName>WinCCCT</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

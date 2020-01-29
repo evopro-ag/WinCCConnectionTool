@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CLI.Commands
 {
-    [Command("UpdateBlockname", Description = "update Blockname of Variable description")]
-    class UpdateBlocknameCommand : CommandBase
+    [Command("setOpcNS", Description = "Update OPC Namespace number of all variables in a connection")]
+    class UpdateBlockNumberCommand : CommandBase
     {
         [Argument(0)]
         [Required]
@@ -21,20 +21,20 @@ namespace CLI.Commands
 
         [Argument(1)]
         [Required]
-        public int NewBlockname { get; set; }
+        public int NewBlockNumber { get; set; }
 
         public async Task OnExecute()
         {
             SearchMdfFile();
-            await LoadDatabase(Path);
+            await LoadDatabase();
             await variableService.LoadVariables();
             await UpdateBlockname();
-            Close();
+            CloseDatabase();
         }
 
         public async Task UpdateBlockname()
         {
-            var connection = connectionService.Connections.FirstOrDefault(c => c.ConnectionName.Equals(ConnectionName, StringComparison.InvariantCultureIgnoreCase));
+            var connection = ConnectionService.Connections.FirstOrDefault(c => c.ConnectionName.Equals(ConnectionName, StringComparison.InvariantCultureIgnoreCase));
             if (connection == null)
             {
                 Console.WriteLine($"No connection with name '{ConnectionName}' available.");
@@ -44,21 +44,21 @@ namespace CLI.Commands
             var connectionId = connection.ConnectionId;
             var varsToUpdate = variableService.Variables.Where(variable => variable.ConnectionId == connectionId);
 
-            using (var dbcxtransaction = databaseService.BeginTransaction())
+            using (var dbcxtransaction = DatabaseService.BeginTransaction())
             {
                 try
                 {
                     //databaseService.CurrentContext.AddRange(varsToUpdate);
                     foreach (var variable in varsToUpdate)
                     {
-                        variable.Blockname = NewBlockname;
-                        databaseService.CurrentContext.Entry(variable).State = EntityState.Modified;
+                        variable.Blockname = NewBlockNumber;
+                        DatabaseService.CurrentContext.Entry(variable).State = EntityState.Modified;
                         //await variableService.UpdateVariable(variable);
                     }
 
                     dbcxtransaction.Commit();
-                    await databaseService.CurrentContext.SaveChangesAsync();
-                    Console.WriteLine($"Blockname successfully updated on {varsToUpdate.Count()} rows");
+                    await DatabaseService.CurrentContext.SaveChangesAsync();
+                    Console.WriteLine($"Block number successfully updated in {varsToUpdate.Count()} rows");
                 }
                 catch(Exception ex)
                 {
@@ -69,7 +69,7 @@ namespace CLI.Commands
             }
         }
 
-        public UpdateBlocknameCommand(IConnectionService connectionService, IVariableService variableService, IDatabaseService databaseService) : base(connectionService, databaseService)
+        public UpdateBlockNumberCommand(IConnectionService connectionService, IVariableService variableService, IDatabaseService databaseService) : base(connectionService, databaseService)
         {
             this.variableService = variableService;
         }

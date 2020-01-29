@@ -12,13 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CLI
 {
-    [Subcommand(typeof(ListCommand), typeof(SetCommand), typeof(UpdateConnection), typeof(UpdateBlocknameCommand))]
+    [Subcommand(typeof(ListCommand), typeof(SetConnectionCommand), typeof(UpdateConnection), typeof(UpdateBlockNumberCommand))]
     public class Program
     {
-        [Option("--path", Description = "Path to MDF file")]
-        public string Path { get; set; }
-
-
         private static CommandLineApplication<Program> app;
 
         public static int Main(string[] args)

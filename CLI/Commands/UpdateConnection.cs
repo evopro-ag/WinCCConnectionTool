@@ -10,7 +10,7 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace CLI.Commands
 {
-    [Command("UpdateConnection", Description = "update DB connection string")]
+    [Command("setOpc", Description = "Update a WinCC connection string of type OPC UA")]
     class UpdateConnection : CommandBase
     {
         [Argument(0)]
@@ -27,15 +27,14 @@ namespace CLI.Commands
 
         public async Task OnExecute()
         {
-            SearchMdfFile();
-            await LoadDatabase(Path);
+            await LoadDatabase();
             await UpdateConnectionString();
-            Close();
+            CloseDatabase();
         }
 
         private async Task UpdateConnectionString()
         {
-            var connection = connectionService.Connections.FirstOrDefault(c => c.ConnectionName.Equals(ConnectionName, StringComparison.InvariantCultureIgnoreCase));
+            var connection = ConnectionService.Connections.FirstOrDefault(c => c.ConnectionName.Equals(ConnectionName, StringComparison.InvariantCultureIgnoreCase));
             if (connection == null)
             {
                 Console.WriteLine($"No connection with name '{ConnectionName}' available.");
@@ -43,7 +42,7 @@ namespace CLI.Commands
             }
 
             connection.Parameter = ReplaceHostAndPort(connection.Parameter,Host,Port);
-            await connectionService.UpdateConectionParameter(connection);
+            await ConnectionService.UpdateConectionParameter(connection);
             return;
         }
 
