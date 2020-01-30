@@ -1,19 +1,30 @@
 # WinCCConnectionTool
 
-[![Build status](https://ci.appveyor.com/api/projects/status/ww2gbkq05yyh59ng?svg=true)](https://ci.appveyor.com/project/StefanDoubleU/winccconnectiontool)
+[![Build status](https://ci.appveyor.com/api/projects/status/u0gav7sv0jt2v6wg?svg=true)](https://ci.appveyor.com/project/fbarresi/winccconnectiontool)
+
 
 ## Usage:
-cli.exe `<Database> <cmd> <params>`
+`WinCCCT [options] [command]`
 
 
-### Database:  
-Full qualified path to *.mdf database file `.\HMI_577I\HMI_577I.MDF`
+### Options:
+ - `--path` : Path of MDF file
+ - `--dbName` : Name of MDF file
 
-### cmd: 
-* `list`: Lists all connections within the WinCC project
-* `set <connectionName> <newParameter>`: Set the parameter to a given connection name.
+`-?|-h|--help`  Show help information
 
- Example:
- * S7 Connection: `cli.exe "C:\temp\project1\HMI_577I\HMI_577I.MDF" set "connection1" "IP,10.10.100.119,,0,2,02"` 
- * OPC-UA: `cli.exe <path> set "connection1" "opc.tcp://10.10.100.119:4840,1,1,0; <UA>; 0.00; 0; 0; 1"` 
+### Commands: 
+
+  - `list`: List all WinCC connections
+  - `setCon`: Set WinCC connection string
+  - `setOpc` : Update a WinCC connection string of type OPC UA
+  - `setOpcNS` : Update OPC Namespace number of all variables in a connection
+
+Run `WinCCCT [command] --help` for more information about a command.
+
+### Examples
+ - List all WinCC connections: `WinCCCT list --dbName HMI_577I.MDF`
+ - Change parameter of a generic connection: `WinCCCT setCon connection1 "IP,10.10.100.119,,0,2,02"`
+ - Change OPC UA connection with hostname and portnumber: `WinCCCT setOpc connection1 MyNewHostName 4048`
+ - Change OPC UA namespace number: `WinCCCT setOpcNS connection1 4`
 
