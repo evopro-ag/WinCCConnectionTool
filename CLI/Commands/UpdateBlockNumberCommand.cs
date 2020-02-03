@@ -25,7 +25,6 @@ namespace CLI.Commands
 
         public async Task OnExecute()
         {
-            SearchMdfFile();
             await LoadDatabase();
             await variableService.LoadVariables();
             await UpdateBlockname();

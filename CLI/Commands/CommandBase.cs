@@ -69,6 +69,11 @@ namespace CLI.Commands
             }
             else if (listOfFiles.Count() > 1)
             {
+                foreach (var file in listOfFiles)
+                {
+                    Console.WriteLine($"Found DB file at: '{file}'");
+                }
+
                 throw new InvalidCommandException(
                     "Found more than 1 MDF file. Please specify which one to use via the --path or --dbName option");
             }
