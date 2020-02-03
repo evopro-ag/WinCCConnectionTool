@@ -59,7 +59,7 @@ namespace CLI.Commands
             DatabaseService.CloseDatabase();
         }
 
-        protected void SearchMdfFile(string pattern = null)
+        private void SearchMdfFile(string pattern = null)
         {
             var listOfFiles = Directory.EnumerateFiles(Environment.CurrentDirectory, pattern ?? "*.MDF",
                 SearchOption.AllDirectories);
